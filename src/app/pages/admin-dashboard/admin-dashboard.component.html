@@ -1,0 +1,174 @@
+<div class="row p-3 offset-md-1">
+    <div class="col-md-11 col-sm-12">
+
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Users</a>
+                <ng-template ngbNavContent>
+                    <div class="card-body table-full-width table-responsive">
+                        <form>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Picture</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">Admin</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let user of users | async; index as i">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>
+                                        <img [src]="user.photoURL? user.photoURL:'../../../assets/user-profile.png' "
+                                             class="mr-2"
+                                             style="width: 60px">
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="user.displayName"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="user.email"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="user.admin"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination
+                                        [collectionSize]="total$ | async" [(page)]="service.page"
+                                        [pageSize]="service.pageSize">
+                                </ngb-pagination>
+
+                                <select class="custom-select" style="width: auto" name="pageSize"
+                                        [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Bookings</a>
+                <ng-template ngbNavContent>
+                    <div class="card-body table-full-width table-responsive">
+                        <form>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col" sortable="name" (sort)="onSort($event)">Area</th>
+                                    <th scope="col" sortable="area" (sort)="onSort($event)">Slot</th>
+                                    <th scope="col" sortable="population" (sort)="onSort($event)">Start Time</th>
+                                    <th scope="col" sortable="population" (sort)="onSort($event)">End Time</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let booking of bookings | async; index as i">
+                                    <th scope="row">{{i + 1}}</th>
+                                    <td>
+                                        <ngb-highlight [result]="booking.name"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="booking.area "></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="booking.number"></ngb-highlight>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination
+                                        [collectionSize]="total$ | async" [(page)]="service.page"
+                                        [pageSize]="service.pageSize">
+                                </ngb-pagination>
+
+                                <select class="custom-select" style="width: auto" name="pageSize"
+                                        [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink>Feedbacks</a>
+                <ng-template ngbNavContent>
+                    <div class="card-body table-full-width table-responsive">
+                        <form>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col" sortable="name" (sort)="onSort($event)">User</th>
+                                    <th scope="col" sortable="area" (sort)="onSort($event)">Feed Back</th>
+                                    <th scope="col" sortable="population" (sort)="onSort($event)">Reply</th>
+                                    <th scope="col" sortable="population" (sort)="onSort($event)">Action</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let country of countries$ | async">
+                                    <th scope="row">{{ country.id }}</th>
+                                    <td>
+                                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                                             class="mr-2"
+                                             style="width: 20px">
+                                        <ngb-highlight [result]="country.name"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="country.area | number"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="country.population | number"></ngb-highlight>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination
+                                        [collectionSize]="total$ | async" [(page)]="service.page"
+                                        [pageSize]="service.pageSize">
+                                </ngb-pagination>
+
+                                <select class="custom-select" style="width: auto" name="pageSize"
+                                        [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        <pre>Active: {{ active }}</pre>
+    </div>
+</div>
+

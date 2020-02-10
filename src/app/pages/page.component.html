@@ -1,0 +1,11 @@
+<nav class="site-header sticky-top py-1 bg-dark">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <a class="py-2" style="color: white" routerLink="/">Bookings</a>
+        <a class="py-2" style="color: white" routerLink="/booking">Map</a>
+        <a class="py-2" style="color: white" routerLink="/feedback">Feedback</a>
+        <a class="py-2" style="color: white" routerLink="/dashboard">Admin</a>
+        <a class="py-2" style="color: white" (click)="auth.SignOut()" routerLink="">Logout</a>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>
