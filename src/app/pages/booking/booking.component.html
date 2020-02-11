@@ -1,164 +1,157 @@
-<div class="row offset-md-1">
-    <div class="col-sm-11 col-md-5">
-        <div class="card">
-            <div class="card-header ">
-                <h4 class="card-title text-center">Make Booking</h4>
-            </div>
-            <div class="card-body">
-                <form #bookingForm="ngForm" (ngSubmit)="onSubmit()">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group ml-5">
-                                <label>Date</label>
-                                <input
-                                        class="form-control ml-5"
-                                        placeholder="yyyy-mm-dd"
-                                        name="date"
-                                        [(ngModel)]="model.dateInput"
-                                        ngbDatepicker
-                                        [footerTemplate]="footerTemplate"
-                                        #d="ngbDatepicker"
-                                        #date="ngModel"
-                                        required
-                                        [class.is-invalid]="date.invalid && (date.touched ||bookingForm.submitted)"
-                                />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
-                                            type="button"></button>
-                                </div>
-                                <div class="invalid-feedback"
-                                     *ngIf="bookingForm.form.controls.date?.hasError('required')">
-                                    Please enter date
-                                </div>
-                                <div class="invalid-feedback"
-                                     *ngIf="bookingForm.form.controls.date?.hasError('invalidYear')">
-                                    Entered date should be after today's date
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mt-5 mr-1 text-right" style="font-size: 13px;">Start Time</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <ngb-timepicker
-                                    name="startTime"
-                                    [(ngModel)]="model.startTimeInput"
-                                    [meridian]="true"
-                                    required
-                                    #startTime="ngModel"
-                                    [class.is-invalid]="startTime.invalid && (bookingForm.submitted)"
-                            ></ngb-timepicker>
-                            <div class="invalid-feedback">
-                                Please select start time
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mt-5 mr-1 text-right" style="font-size: 13px;">End Time</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <ngb-timepicker
-                                    name="endTime"
-                                    [(ngModel)]="model.endTimeInput"
-                                    [meridian]="true"
-                                    required
-                                    #endTime="ngModel"
-                                    [class.is-invalid]="endTime.invalid && (bookingForm.submitted)"
-                            ></ngb-timepicker>
-                            <div class="invalid-feedback"
-                                 *ngIf="bookingForm.form.controls.endTime?.hasError('required')">
-                                Please select end time
-                            </div>
-                            <div class="invalid-feedback"
-                                 *ngIf="bookingForm.form.controls.endTime?.hasError('invalidEndTime')">
-                                End time should be after start time
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-info btn-fill btn-wd">Check</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <ng-template #footerTemplate>
-        <hr class="my-0"/>
-        <button class="btn btn-primary btn-sm m-2 float-left" (click)="model = today; d.close()">Today</button>
-        <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
-    </ng-template>
-
-    <div class="col-sm-11 col-md-6">
-        <div class="card regular-table-with-color">
-            <div class="card-header ">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4 class="card-title">Manage Bookings</h4>
-                    </div>
-                    <div class="col-sm-6 ">
-                        <input class="form-control  pull-right" type="text" name="searchTerm"
-                               [(ngModel)]="service.searchTerm"/>
-                        <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
-                    </div>
+<div class="row">
+  <div class="col-sm-12 col-md-6">
+    <div class="card">
+      <div class="card-header bg-primary text-light">
+        <h4 class="card-title text-center p-1">Make Booking</h4>
+      </div>
+      <div class="card-body">
+        <form #bookingForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="form-group row col-sm-8 m-auto">
+            <div class="col-md-4 col-sm-3 my-auto"><label for="date" class="col-form-label">Date</label></div>
+            <div class="col-md-8 col-sm-9">
+              <div class="input-group">
+                <input
+                  id="date"
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="date"
+                  [(ngModel)]="model.dateInput"
+                  ngbDatepicker
+                  [footerTemplate]="footerTemplate"
+                  #d="ngbDatepicker"
+                  #date="ngModel"
+                  required
+                  [class.is-invalid]="date.invalid && (date.touched || bookingForm.submitted)"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                 </div>
+              </div>
+              <div class="invalid-feedback" *ngIf="bookingForm.form.controls.date?.hasError('required')">
+                Please enter date
+              </div>
+              <div class="invalid-feedback" *ngIf="bookingForm.form.controls.date?.hasError('invalidYear')">
+                Entered date should be after today's date
+              </div>
             </div>
-            <div class="card-body table-full-width table-responsive">
-                <form>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" sortable="name" (sort)="onSort($event)">Parking</th>
-                            <th scope="col" sortable="area" (sort)="onSort($event)">Date</th>
-                            <th scope="col" sortable="population" (sort)="onSort($event)">Start</th>
-                            <th scope="col" sortable="population" (sort)="onSort($event)">End</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let country of countries$ | async">
-                            <th scope="row">{{ country.id }}</th>
-                            <td>
-                                <img
-                                        [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                                        class="mr-2"
-                                        style="width: 20px"
-                                />
-                                <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
-                            </td>
-                            <td>
-                                <ngb-highlight [result]="country.area | number"
-                                               [term]="service.searchTerm"></ngb-highlight>
-                            </td>
-                            <td>
-                                <ngb-highlight [result]="country.population | number"
-                                               [term]="service.searchTerm"></ngb-highlight>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+          </div>
 
-                    <div class="d-flex justify-content-between p-2">
-                        <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page"
-                                        [pageSize]="service.pageSize">
-                        </ngb-pagination>
-
-                        <select class="custom-select" style="width: auto" name="pageSize"
-                                [(ngModel)]="service.pageSize">
-                            <option [ngValue]="2">2 items per page</option>
-                            <option [ngValue]="4">4 items per page</option>
-                            <option [ngValue]="6">6 items per page</option>
-                        </select>
-                    </div>
-                </form>
+          <div class="form-group row col-sm-8 m-auto">
+            <div class="col-sm-3 col-md-4 my-auto">
+              <label for="startTime" class="col-form-label">Start Time</label>
             </div>
-        </div>
+            <div class="col-sm-9 col-md-8">
+              <ngb-timepicker
+                id="startTime"
+                name="startTime"
+                [(ngModel)]="model.startTimeInput"
+                [meridian]="true"
+                required
+                #startTime="ngModel"
+                [class.is-invalid]="startTime.invalid && bookingForm.submitted"
+              ></ngb-timepicker>
+              <div class="invalid-feedback">
+                Please select start time
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row col-sm-8 m-auto">
+            <div class="col-md-4 col-sm-3 my-auto">
+              <label class="col-form-label" for="endTime">End Time</label>
+            </div>
+            <div class="col-md-8 col-sm-9">
+              <ngb-timepicker
+                id="endTime"
+                name="endTime"
+                [(ngModel)]="model.endTimeInput"
+                [meridian]="true"
+                required
+                #endTime="ngModel"
+                [class.is-invalid]="endTime.invalid && bookingForm.submitted"
+              ></ngb-timepicker>
+              <div class="invalid-feedback" *ngIf="bookingForm.form.controls.endTime?.hasError('required')">
+                Please select end time
+              </div>
+              <div class="invalid-feedback" *ngIf="bookingForm.form.controls.endTime?.hasError('invalidEndTime')">
+                End time should be after start time
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer text-center">
+            <button type="submit" class="btn btn-info btn-fill btn-wd">Check</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+
+  <ng-template #footerTemplate>
+    <hr class="my-0" />
+    <button class="btn btn-primary btn-sm m-2 float-left" (click)="model = today; d.close()">Today</button>
+    <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
+  </ng-template>
+
+  <div class="col-sm-12 col-md-6">
+    <div class="card regular-table-with-color">
+      <div class="card-header bg-primary text-light">
+        <div class="row">
+          <div class="col-md-6 col-sm-12 my-auto">
+            <h4 class="card-title">Manage Bookings</h4>
+          </div>
+          <div class="col-md-6 col-sm-12 ">
+            <input class="form-control  pull-right" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+            <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body table-full-width table-responsive">
+        <form>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" sortable="name" (sort)="onSort($event)">Parking</th>
+                <th scope="col" sortable="area" (sort)="onSort($event)">Date</th>
+                <th scope="col" sortable="population" (sort)="onSort($event)">Start</th>
+                <th scope="col" sortable="population" (sort)="onSort($event)">End</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let country of countries$ | async">
+                <th scope="row">{{ country.id }}</th>
+                <td>
+                  <img
+                    [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                    class="mr-2"
+                    style="width: 20px"
+                  />
+                  <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+            </ngb-pagination>
+
+            <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+              <option [ngValue]="2">2 items per page</option>
+              <option [ngValue]="4">4 items per page</option>
+              <option [ngValue]="6">6 items per page</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

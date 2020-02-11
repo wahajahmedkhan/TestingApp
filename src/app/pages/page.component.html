@@ -1,4 +1,4 @@
-<nav class="site-header sticky-top py-1 bg-dark">
+<!-- <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
         <a class="py-2" style="color: white" routerLink="/">Bookings</a>
         <a class="py-2" style="color: white" routerLink="/booking">Map</a>
@@ -6,6 +6,23 @@
         <a class="py-2" style="color: white" routerLink="/dashboard">Admin</a>
         <a class="py-2" style="color: white" (click)="auth.SignOut()" routerLink="">Logout</a>
     </div>
+</nav> -->
+
+<nav class="navbar">
+  <label class="navbar-toggle" id="js-navbar-toggle" for="chkToggle">
+    <i class="fa fa-bars"></i>
+  </label>
+  <a href="#" class="logo" routerLink="/main">Parking App</a>
+  <input type="checkbox" id="chkToggle" />
+  <ul class="main-nav" id="js-menu">
+    <li>
+      <a class="nav-links" routerLink="/main" routerLinkActive="navLinkActive">Bookings</a>
+    </li>
+    <li><a class="nav-links" routerLink="/booking" routerLinkActive="navLinkActive">Map</a></li>
+    <li><a class="nav-links" routerLink="/feedback" routerLinkActive="navLinkActive">Feedback</a></li>
+    <li><a class="nav-links" routerLink="/dashboard" routerLinkActive="navLinkActive">Admin</a></li>
+    <li><a class="nav-links" (click)="auth.SignOut()" routerLink="">Logout</a></li>
+  </ul>
 </nav>
 
 <router-outlet></router-outlet>
