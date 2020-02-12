@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {map} from 'rxjs/internal/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {BookingModel} from '@model/booking.model';
 
@@ -10,6 +9,7 @@ export class BookingsService {
     private bookingModel: BookingModel = null;
 
     constructor(private db: AngularFirestore) {
+
     }
 
     get thisBookingModel() {
@@ -23,21 +23,7 @@ export class BookingsService {
 
     getBookings() {
         return new Promise<any>((resolve, reject) => {
-            this.db
-                .collection('/bookings')
-                .snapshotChanges()
-                .pipe(
-                    map((items) => {
-                        const response = [];
-                        items.forEach((item) => {
-                            response.push(item.payload.doc.data());
-                        });
-                        return response;
-                    }),
-                )
-                .subscribe((snapshots) => {
-                    resolve(snapshots);
-                });
+            resolve(this.db.collection('/bookings').valueChanges());
         });
     }
 

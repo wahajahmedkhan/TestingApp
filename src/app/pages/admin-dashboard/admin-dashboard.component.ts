@@ -9,7 +9,6 @@ import {FeedbackService} from '@services/endpoints/feedback.service';
     styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-    // @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
     active = 1;
 
@@ -32,22 +31,5 @@ export class AdminDashboardComponent implements OnInit {
         this.feedBacks = this.feedBackService.getFeedBacks();
     }
 
-    // onSort({column, direction}: SortEvent) {
-    //   // resetting other headers
-    //   this.headers.forEach(header => {
-    //     if (header.sortable !== column) {
-    //       header.direction = '';
-    //     }
-    //   });
 
-    // this.users = this.UserService.getUsers().then((res) => {
-    //   if (direction === '') {
-    //
-    //   } else {
-    //     res = [...User].sort((a, b) => {
-    //       const res = compare(a[column], b[column]);
-    //       return direction === 'asc' ? res : -res;
-    //     });
-    //   }
-    // });
 }

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {map} from 'rxjs/internal/operators';
 
 @Injectable()
 export class AreasService {
@@ -9,28 +8,16 @@ export class AreasService {
     }
 
     getParkingAraes() {
-        return this.db.collection('/areas').snapshotChanges().pipe(map(items => {
-            const response = [];
-            items.forEach(item => {
-                response.push(item.payload.doc.data())
-            });
-            return response;
-        }));
+        return new Promise<any>((resolve, reject) => {
+            resolve(this.db.collection('/areas').valueChanges());
+        });
 
     }
 
     getParkingSlots() {
         return new Promise<any>((resolve, reject) => {
-            this.db.collection('/slots').snapshotChanges().pipe(map(items => {
-                const response = [];
-                items.forEach(item => {
-                    response.push(item.payload.doc.data())
-                });
-                return response;
-            })).subscribe(snapshots => {
-                resolve(snapshots)
-            })
-        })
+            resolve(this.db.collection('/slots').valueChanges());
+        });
     }
 
 }
